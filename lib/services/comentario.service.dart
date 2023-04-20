@@ -21,7 +21,7 @@ class ComentarioService {
       var response = await client.post(Uri.parse('${apiUrl}comentario/'),
           body: jsonEncode(body),
           headers: {
-            'x-token': token,
+            'Authorization': 'Bearer $token',
             "Content-Type": "application/json"
           }).timeout(const Duration(seconds: 30));
 

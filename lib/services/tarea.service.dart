@@ -39,7 +39,7 @@ class TareaService {
     final client = Client();
     try {
       var response = await client.get(Uri.parse('${apiUrl}categoria'),
-          headers: {'x-token': token}).timeout(const Duration(seconds: 30));
+          headers: {'Authorization': 'Bearer $token'}).timeout(const Duration(seconds: 30));
 
       if (response.statusCode == 200) {
         return categoriasFromJson(response.body);
@@ -66,7 +66,7 @@ class TareaService {
       var response = await client.put(Uri.parse('${apiUrl}categoria/'),
           body: jsonEncode(body),
           headers: {
-            'x-token': token,
+            'Authorization': 'Bearer $token',
             "Content-Type": "application/json"
           }).timeout(const Duration(seconds: 30));
 
@@ -86,7 +86,7 @@ class TareaService {
       var response = await client.delete(Uri.parse('${apiUrl}categoria/'),
           body: jsonEncode(body),
           headers: {
-            'x-token': token,
+            'Authorization': 'Bearer $token',
             "Content-Type": "application/json"
           }).timeout(const Duration(seconds: 30));
 

@@ -17,7 +17,7 @@ class PrioridadService {
       var response = await client.post(Uri.parse('${apiUrl}prioridad/'),
           body: jsonEncode(body),
           headers: {
-            'x-token': token,
+            'Authorization': 'Bearer $token',
             "Content-Type": "application/json"
           }).timeout(const Duration(seconds: 30));
 
@@ -31,7 +31,7 @@ class PrioridadService {
     final client = Client();
     try {
       var response = await client.get(Uri.parse('${apiUrl}prioridad'),
-          headers: {'x-token': token}).timeout(const Duration(seconds: 30));
+          headers: {'Authorization': 'Bearer $token'}).timeout(const Duration(seconds: 30));
 
       if (response.statusCode == 200) {
         return prioridadesFromJson(response.body);
@@ -56,7 +56,7 @@ class PrioridadService {
       var response = await client.put(Uri.parse('${apiUrl}prioridad/'),
           body: jsonEncode(body),
           headers: {
-            'x-token': token,
+            'Authorization': 'Bearer $token',
             "Content-Type": "application/json"
           }).timeout(const Duration(seconds: 30));
 
@@ -77,7 +77,7 @@ class PrioridadService {
       var response = await client.delete(Uri.parse('${apiUrl}prioridad/'),
           body: jsonEncode(body),
           headers: {
-            'x-token': token,
+            'Authorization': 'Bearer $token',
             "Content-Type": "application/json"
           }).timeout(const Duration(seconds: 30));
 
