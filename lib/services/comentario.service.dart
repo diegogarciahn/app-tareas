@@ -49,4 +49,25 @@ class ComentarioService {
       return getCodErrorService(e);
     }
   }
+
+  static Future<int> eliminarComentario(
+      {required int idComentario,
+      required String token}) async {
+    final client = Client();
+    final body = {
+      "id": idComentario,
+    };
+    try {
+      var response = await client.delete(Uri.parse('${apiUrl}comentario/'),
+          body: jsonEncode(body),
+          headers: {
+            'Authorization': 'Bearer $token',
+            "Content-Type": "application/json"
+          }).timeout(const Duration(seconds: 30));
+
+      return response.statusCode;
+    } catch (e) {
+      return getCodErrorService(e);
+    }
+  }
 }

@@ -31,6 +31,7 @@ class _ComentariosTareaScreenState extends State<ComentariosTareaScreen> {
         Scaffold(
           backgroundColor: tema.background,
           body: CustomScrollView(
+            physics: const BouncingScrollPhysics(),
             slivers: [
               SliverToBoxAdapter(
                 child:
@@ -60,6 +61,8 @@ class _ComentariosTareaScreenState extends State<ComentariosTareaScreen> {
                             comentario: comentarioprovider.listComentarios[i],
                             size: size,
                             tema: tema,
+                            comentarioProvider: comentarioprovider,
+                            tarea: widget.tarea,
                           ),
                       childCount: comentarioprovider.listComentarios.length)),
               const SliverToBoxAdapter(
@@ -114,11 +117,15 @@ class ComentarioItem extends StatelessWidget {
     required this.comentario,
     required this.size,
     required this.tema,
+    required this.comentarioProvider,
+    required this.tarea,
   }) : super(key: key);
 
   final Comentario comentario;
   final Size size;
   final ColorScheme tema;
+  final ComentarioProvider comentarioProvider;
+  final Tarea tarea;
 
   @override
   Widget build(BuildContext context) {
@@ -134,9 +141,35 @@ class ComentarioItem extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextParrafo(
-              texto: comentario.contenido ?? '',
-              textAlign: TextAlign.left,
+            Row(
+              children: [
+                Expanded(
+                  child: TextParrafo(
+                    texto: comentario.contenido ?? '',
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+                PopupMenuButton(
+                    itemBuilder: ((context) => [
+                          PopupMenuItem<int>(
+                            value: 1,
+                            onTap: () {
+                              final controller = ComentarioController(
+                                  comentarioProvider: comentarioProvider);
+                              controller
+                                  .eliminarComentario(context,
+                                      idComentario: comentario.id ?? 0)
+                                  .then((value) {
+                                if (value) {
+                                  controller.traerComentarios(context,
+                                      idTarea: tarea.id ?? 0);
+                                }
+                              });
+                            },
+                            child: const Text('Eliminar'),
+                          ),
+                        ]))
+              ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,

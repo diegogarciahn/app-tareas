@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 
 import '../globals/functions/functions.dart';
 import '../globals/widgets/widgets.dart';
@@ -55,6 +56,33 @@ class ComentarioController {
       comentarioProvider.listComentarios = [];
       comentarioProvider.loading = false;
     }
+    return false;
+  }
+
+  Future<bool> eliminarComentario(
+    context, {
+    required int idComentario,
+  }) async {
+    final token = await traerToken(context);
+    if (token != '') {
+      comentarioProvider.loading = true;
+      final respuesta = await ComentarioService.eliminarComentario(
+          idComentario: idComentario, token: token);
+      if (respuesta == 200) {
+        comentarioProvider.loading = false;
+        globalSnackBar('Comentario eliminado exitósamente',
+            color: Colors.green);
+        return true;
+      }
+
+      CuerpoDeController.cuerpoNormal(context,
+          mensajeError: 'eliminar el comentario',
+          codRespuesta: respuesta, funcionFinal: () {
+        comentarioProvider.loading = false;
+        return false;
+      });
+    }
+    comentarioProvider.loading = false;
     return false;
   }
 }
