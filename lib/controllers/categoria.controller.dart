@@ -27,12 +27,12 @@ class CategoriaController {
           token: token);
       if (respuesta == 200) {
         categoriaProvider.loading = false;
-        globalSnackBar('Producto creado exitósamente', color: Colors.green);
+        globalSnackBar('Categoría creado exitósamente', color: Colors.green);
         return true;
       }
 
       CuerpoDeController.cuerpoNormal(context,
-          mensajeError: 'crear el producto',
+          mensajeError: 'crear el categoría',
           codRespuesta: respuesta, funcionFinal: () {
         categoriaProvider.loading = false;
         return false;

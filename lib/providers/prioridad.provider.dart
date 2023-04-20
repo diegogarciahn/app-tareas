@@ -5,6 +5,21 @@ import '../models/models.dart';
 class PrioridadProvider with ChangeNotifier {
   bool _loading = false;
   List<Prioridad> _listPrioridades = [];
+  int _idPrioridadSelected = 0;
+  String _prioridadSelected = "Seleccione la prioridad de la tarea";
+
+  String get prioridadSelected => _prioridadSelected;
+  set prioridadSelected(String value) {
+    _prioridadSelected = value;
+    notifyListeners();
+  }
+
+  int get idPrioridadSelected => _idPrioridadSelected;
+
+  set idPrioridadSelected(int value) {
+    _idPrioridadSelected = value;
+    notifyListeners();
+  }
 
   List<Prioridad> get listPrioridades => _listPrioridades;
 

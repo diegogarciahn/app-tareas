@@ -42,7 +42,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       size: size,
                       icono: Icons.toc_rounded,
                       labelText: 'Tareas',
-                      funcion: () {})),
+                      funcion: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const TareasScreen()));
+                      })),
               SizedBox(width: size.width * 0.02),
               Expanded(
                   child: GridItemHome(

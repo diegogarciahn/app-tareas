@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => CategoriaProvider()),
         ChangeNotifierProvider(create: (_) => EtiquetaProvider()),
         ChangeNotifierProvider(create: (_) => PrioridadProvider()),
+        ChangeNotifierProvider(create: (_) => TareaProvider()),
       ],
       child: MaterialApp(
           title: 'Material App',

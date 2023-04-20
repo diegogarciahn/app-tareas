@@ -3,3 +3,4 @@ export 'categoria.provider.dart';
 export 'comentario.provider.dart';
 export 'etiqueta.provider.dart';
 export 'prioridad.provider.dart';
+export 'tarea.provider.dart';
