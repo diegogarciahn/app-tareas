@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../controllers/controllers.dart';
 import '../../globals/widgets/widgets.dart';
+import '../../providers/providers.dart';
 import '../screens.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -15,6 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final tema = Theme.of(context).colorScheme;
     Size size = MediaQuery.of(context).size;
+    final categoriasprovider = Provider.of<CategoriaProvider>(context);
     return Scaffold(
       backgroundColor: tema.background,
       appBar: AppBar(
@@ -44,6 +48,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       icono: Icons.topic_outlined,
                       labelText: 'Categorías',
                       funcion: () {
+                        CategoriaController(
+                                categoriaProvider: categoriasprovider)
+                            .traerCategorias(context);
                         Navigator.push(
                             context,
                             MaterialPageRoute(

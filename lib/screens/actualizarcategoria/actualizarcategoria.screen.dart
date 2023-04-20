@@ -1,23 +1,36 @@
-import 'package:app_tareas/controllers/categoria.controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../controllers/controllers.dart';
 import '../../globals/functions/functions.dart';
 import '../../globals/widgets/widgets.dart';
+import '../../models/models.dart';
 import '../../providers/providers.dart';
 
-class CrearCategoriaScreen extends StatefulWidget {
-  const CrearCategoriaScreen({Key? key}) : super(key: key);
+class ActualizarCategoriaScreen extends StatefulWidget {
+  const ActualizarCategoriaScreen({Key? key, required this.categoria})
+      : super(key: key);
+
+  final Categoria categoria;
 
   @override
-  State<CrearCategoriaScreen> createState() => _CrearCategoriaScreenState();
+  State<ActualizarCategoriaScreen> createState() =>
+      _ActualizarCategoriaScreenState();
 }
 
-class _CrearCategoriaScreenState extends State<CrearCategoriaScreen> {
+class _ActualizarCategoriaScreenState extends State<ActualizarCategoriaScreen> {
   TextEditingController categoriaController = TextEditingController();
   TextEditingController descripcionController = TextEditingController();
   ValidacionesTextField check = ValidacionesTextField();
   ValidacionesTextField checkdescripcion = ValidacionesTextField();
+
+  @override
+  void initState() {
+    categoriaController.text = widget.categoria.nombre ?? '';
+    descripcionController.text = widget.categoria.descripcion ?? '';
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final tema = Theme.of(context).colorScheme;
@@ -29,12 +42,12 @@ class _CrearCategoriaScreenState extends State<CrearCategoriaScreen> {
           backgroundColor: tema.background,
           appBar: AppBar(
               title: const TextSecundario(
-            texto: 'Crear categoría',
+            texto: 'Actualizar categoría',
           )),
           body: ListView(children: [
             Container(
               margin: const EdgeInsets.symmetric(vertical: 8),
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 15),
               decoration: BoxDecoration(color: tema.surface),
               child: Column(
                 children: [
@@ -77,16 +90,16 @@ class _CrearCategoriaScreenState extends State<CrearCategoriaScreen> {
                         return alertError(context,
                             mensaje: 'Por favor complete todos los campos');
                       }
-
                       final controller = CategoriaController(
                           categoriaProvider: categoriaprovider);
                       controller
-                          .crearCategoria(context,
+                          .actualizarCategoria(context,
+                              idCategoria: widget.categoria.id ?? 0,
                               nombreCategoria: categoriaController.text,
                               descripcion: descripcionController.text)
                           .then((value) {
                         if (value) {
-                          globalSnackBar('Categoría creada exitosamente',
+                          globalSnackBar('Categoría actualizada exitosamente',
                               color: Colors.green);
                           controller.traerCategorias(context).then((value) {
                             Navigator.pop(context);
@@ -94,7 +107,33 @@ class _CrearCategoriaScreenState extends State<CrearCategoriaScreen> {
                         }
                       });
                     },
-                    texto: 'Crear',
+                    texto: 'Actualizar',
+                    sinMargen: true,
+                  ),
+                  ButtonXXL(
+                    funcion: () {
+                      final controller = CategoriaController(
+                          categoriaProvider: categoriaprovider);
+                      dialogDecision('Eliminar categoría',
+                          '¿Está seguro de eliminar esta categoría?', () {
+                        Navigator.pop(context);
+                        controller
+                            .eliminarCategoria(context,
+                                idCategoria: widget.categoria.id ?? 0)
+                            .then((value) {
+                          if (value) {
+                            globalSnackBar('Categoría actualizada exitosamente',
+                                color: Colors.green);
+                            controller.traerCategorias(context).then((value) {
+                              Navigator.pop(context);
+                            });
+                          }
+                        });
+                      }, () => Navigator.pop(context), context);
+                    },
+                    texto: 'Eliminar',
+                    colorFondo: tema.error,
+                    colorTexto: tema.onPrimary,
                     sinMargen: true,
                   )
                 ],
