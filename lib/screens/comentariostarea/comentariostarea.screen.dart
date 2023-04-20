@@ -61,7 +61,10 @@ class _ComentariosTareaScreenState extends State<ComentariosTareaScreen> {
                             size: size,
                             tema: tema,
                           ),
-                      childCount: comentarioprovider.listComentarios.length))
+                      childCount: comentarioprovider.listComentarios.length)),
+              const SliverToBoxAdapter(
+                child: SizedBox(height: 80),
+              )
             ],
           ),
           bottomSheet: Container(
@@ -131,7 +134,10 @@ class ComentarioItem extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextParrafo(texto: comentario.contenido ?? ''),
+            TextParrafo(
+              texto: comentario.contenido ?? '',
+              textAlign: TextAlign.left,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
