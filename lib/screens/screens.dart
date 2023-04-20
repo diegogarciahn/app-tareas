@@ -3,3 +3,5 @@ export 'login/login.screen.dart';
 export 'categorias/categorias.screen.dart';
 export 'crearcategoria/crearcategoria.screen.dart';
 export 'actualizarcategoria/actualizarcategoria.screen.dart';
+export 'etiquetas/etiquetas.screen.dart';
+export 'crearetiqueta/crearetiqueta.screen.dart';

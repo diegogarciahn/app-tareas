@@ -122,7 +122,7 @@ class _ActualizarCategoriaScreenState extends State<ActualizarCategoriaScreen> {
                                 idCategoria: widget.categoria.id ?? 0)
                             .then((value) {
                           if (value) {
-                            globalSnackBar('Categoría actualizada exitosamente',
+                            globalSnackBar('Categoría eliminada exitosamente',
                                 color: Colors.green);
                             controller.traerCategorias(context).then((value) {
                               Navigator.pop(context);

@@ -19,6 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final tema = Theme.of(context).colorScheme;
     Size size = MediaQuery.of(context).size;
     final categoriasprovider = Provider.of<CategoriaProvider>(context);
+    final etiquetasprovider = Provider.of<EtiquetaProvider>(context);
     return Scaffold(
       backgroundColor: tema.background,
       appBar: AppBar(
@@ -66,15 +67,22 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                   child: GridItemHome(
                       size: size,
-                      icono: Icons.add,
-                      labelText: 'Categorías',
-                      funcion: () {})),
+                      icono: Icons.label_outline,
+                      labelText: 'Etiquetas',
+                      funcion: () {
+                        EtiquetaController(etiquetaProvider: etiquetasprovider)
+                            .traerEtiquetas(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const EtiquetasScreen()));
+                      })),
               SizedBox(width: size.width * 0.02),
               Expanded(
                   child: GridItemHome(
                       size: size,
-                      icono: Icons.add,
-                      labelText: 'Categorías',
+                      icono: Icons.warning_amber_rounded,
+                      labelText: 'Prioridades de tareas',
                       funcion: () {})),
             ],
           ),
