@@ -20,6 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Size size = MediaQuery.of(context).size;
     final categoriasprovider = Provider.of<CategoriaProvider>(context);
     final etiquetasprovider = Provider.of<EtiquetaProvider>(context);
+    final prioridadprovider = Provider.of<PrioridadProvider>(context);
     return Scaffold(
       backgroundColor: tema.background,
       appBar: AppBar(
@@ -83,7 +84,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       size: size,
                       icono: Icons.warning_amber_rounded,
                       labelText: 'Prioridades de tareas',
-                      funcion: () {})),
+                      funcion: () {
+                        PrioridadController(
+                                prioridadProvider: prioridadprovider)
+                            .traerPrioridades(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const PrioridadesScreen()));
+                      })),
             ],
           ),
         )

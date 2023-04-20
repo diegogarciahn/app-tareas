@@ -1,4 +1,3 @@
-import 'package:app_tareas/providers/etiqueta.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,6 +17,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => CategoriaProvider()),
         ChangeNotifierProvider(create: (_) => EtiquetaProvider()),
+        ChangeNotifierProvider(create: (_) => PrioridadProvider()),
       ],
       child: MaterialApp(
           title: 'Material App',

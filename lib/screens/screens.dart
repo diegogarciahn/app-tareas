@@ -5,3 +5,5 @@ export 'crearcategoria/crearcategoria.screen.dart';
 export 'actualizarcategoria/actualizarcategoria.screen.dart';
 export 'etiquetas/etiquetas.screen.dart';
 export 'crearetiqueta/crearetiqueta.screen.dart';
+export 'prioridades/prioridades.screen.dart';
+export 'crearprioridad/crearprioridad.screen.dart';

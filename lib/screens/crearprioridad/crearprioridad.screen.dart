@@ -6,21 +6,21 @@ import '../../globals/functions/functions.dart';
 import '../../globals/widgets/widgets.dart';
 import '../../providers/providers.dart';
 
-class CrearEtiquetaScreen extends StatefulWidget {
-  const CrearEtiquetaScreen({Key? key}) : super(key: key);
+class CrearPrioridadScreen extends StatefulWidget {
+  const CrearPrioridadScreen({Key? key}) : super(key: key);
 
   @override
-  State<CrearEtiquetaScreen> createState() => _CrearEtiquetaScreenState();
+  State<CrearPrioridadScreen> createState() => _CrearPrioridadScreenState();
 }
 
-class _CrearEtiquetaScreenState extends State<CrearEtiquetaScreen> {
+class _CrearPrioridadScreenState extends State<CrearPrioridadScreen> {
   TextEditingController etiquetaController = TextEditingController();
   ValidacionesTextField check = ValidacionesTextField();
 
   @override
   Widget build(BuildContext context) {
     final tema = Theme.of(context).colorScheme;
-    final etiquetaprovider = Provider.of<EtiquetaProvider>(context);
+    final prioridadprovider = Provider.of<PrioridadProvider>(context);
     Size size = MediaQuery.of(context).size;
     return Stack(
       children: [
@@ -28,7 +28,7 @@ class _CrearEtiquetaScreenState extends State<CrearEtiquetaScreen> {
           backgroundColor: tema.background,
           appBar: AppBar(
               title: const TextSecundario(
-            texto: 'Crear etiqueta',
+            texto: 'Crear prioridad',
           )),
           body: ListView(children: [
             Container(
@@ -47,8 +47,8 @@ class _CrearEtiquetaScreenState extends State<CrearEtiquetaScreen> {
                         errorText: check.error ? check.errorText : null,
                         errorMaxLines: 4,
                         border: const OutlineInputBorder(),
-                        hintText: 'Ej. Etiqueta 1',
-                        label: const TextParrafo(texto: 'Nombre de etiqueta')),
+                        hintText: 'Ej. Prioridad 1',
+                        label: const TextParrafo(texto: 'Nombre de prioridad')),
                   ),
                   const SizedBox(height: 10),
                   ButtonXXL(
@@ -61,16 +61,16 @@ class _CrearEtiquetaScreenState extends State<CrearEtiquetaScreen> {
                             mensaje: 'Por favor complete todos los campos');
                       }
 
-                      final controller = EtiquetaController(
-                          etiquetaProvider: etiquetaprovider);
+                      final controller = PrioridadController(
+                          prioridadProvider: prioridadprovider);
                       controller
-                          .crearEtiqueta(context,
+                          .crearPrioridad(context,
                               nombre: etiquetaController.text)
                           .then((value) {
                         if (value) {
-                          globalSnackBar('Categoría creada exitosamente',
+                          globalSnackBar('Prioridad creada exitosamente',
                               color: Colors.green);
-                          controller.traerEtiquetas(context).then((value) {
+                          controller.traerPrioridades(context).then((value) {
                             Navigator.pop(context);
                           });
                         }
@@ -84,7 +84,7 @@ class _CrearEtiquetaScreenState extends State<CrearEtiquetaScreen> {
             ),
           ]),
         ),
-        if (etiquetaprovider.loading) CargandoWidget(size: size, tema: tema)
+        if (prioridadprovider.loading) CargandoWidget(size: size, tema: tema)
       ],
     );
   }
