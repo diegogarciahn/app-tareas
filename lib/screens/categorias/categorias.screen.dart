@@ -19,32 +19,36 @@ class _CategoriasScreenState extends State<CategoriasScreen> {
     final tema = Theme.of(context).colorScheme;
     Size size = MediaQuery.of(context).size;
     final categoriaprovider = Provider.of<CategoriaProvider>(context);
-    return Scaffold(
-        // backgroundColor: tema.background,
-        appBar: AppBar(
-          title: const TextSecundario(texto: 'Categorías'),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => const CrearCategoriaScreen()));
-                },
-                icon: const Icon(Icons.add_circle_outline))
-          ],
-        ),
-        body: Padding(
-          padding: const EdgeInsets.only(top: 8),
-          child: ListView.separated(
-              separatorBuilder: ((context, index) => const Divider()),
-              itemCount: categoriaprovider.listCategorias.length,
-              itemBuilder: (context, i) => ItemCategoria(
-                    categoria: categoriaprovider.listCategorias[i],
-                    tema: tema,
-                    size: size,
-                  )),
-        ));
+    return Stack(
+      children: [
+        Scaffold(
+            appBar: AppBar(
+              title: const TextSecundario(texto: 'Categorías'),
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const CrearCategoriaScreen()));
+                    },
+                    icon: const Icon(Icons.add_circle_outline))
+              ],
+            ),
+            body: Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: ListView.separated(
+                  separatorBuilder: ((context, index) => const Divider()),
+                  itemCount: categoriaprovider.listCategorias.length,
+                  itemBuilder: (context, i) => ItemCategoria(
+                        categoria: categoriaprovider.listCategorias[i],
+                        tema: tema,
+                        size: size,
+                      )),
+            )),
+        if (categoriaprovider.loading) CargandoWidget(size: size, tema: tema)
+      ],
+    );
   }
 }
 

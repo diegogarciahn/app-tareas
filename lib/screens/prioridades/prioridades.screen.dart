@@ -20,31 +20,36 @@ class _PrioridadesScreenState extends State<PrioridadesScreen> {
     final tema = Theme.of(context).colorScheme;
     Size size = MediaQuery.of(context).size;
     final prioridadprovider = Provider.of<PrioridadProvider>(context);
-    return Scaffold(
-        appBar: AppBar(
-          title: const TextSecundario(texto: 'Prioridades'),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => const CrearPrioridadScreen()));
-                },
-                icon: const Icon(Icons.add_circle_outline))
-          ],
-        ),
-        body: Padding(
-          padding: const EdgeInsets.only(top: 8),
-          child: ListView.separated(
-              separatorBuilder: ((context, index) => const Divider()),
-              itemCount: prioridadprovider.listPrioridades.length,
-              itemBuilder: (context, i) => ItemPrioridad(
-                    prioridad: prioridadprovider.listPrioridades[i],
-                    tema: tema,
-                    size: size,
-                  )),
-        ));
+    return Stack(
+      children: [
+        Scaffold(
+            appBar: AppBar(
+              title: const TextSecundario(texto: 'Prioridades'),
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const CrearPrioridadScreen()));
+                    },
+                    icon: const Icon(Icons.add_circle_outline))
+              ],
+            ),
+            body: Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: ListView.separated(
+                  separatorBuilder: ((context, index) => const Divider()),
+                  itemCount: prioridadprovider.listPrioridades.length,
+                  itemBuilder: (context, i) => ItemPrioridad(
+                        prioridad: prioridadprovider.listPrioridades[i],
+                        tema: tema,
+                        size: size,
+                      )),
+            )),
+        if (prioridadprovider.loading) CargandoWidget(size: size, tema: tema)
+      ],
+    );
   }
 }
 

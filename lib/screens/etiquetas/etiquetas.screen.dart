@@ -20,32 +20,36 @@ class _EtiquetasScreenState extends State<EtiquetasScreen> {
     final tema = Theme.of(context).colorScheme;
     Size size = MediaQuery.of(context).size;
     final etiquetaprovider = Provider.of<EtiquetaProvider>(context);
-    return Scaffold(
-        // backgroundColor: tema.background,
-        appBar: AppBar(
-          title: const TextSecundario(texto: 'Etiquetas'),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => const CrearEtiquetaScreen()));
-                },
-                icon: const Icon(Icons.add_circle_outline))
-          ],
-        ),
-        body: Padding(
-          padding: const EdgeInsets.only(top: 8),
-          child: ListView.separated(
-              separatorBuilder: ((context, index) => const Divider()),
-              itemCount: etiquetaprovider.listEtiquetas.length,
-              itemBuilder: (context, i) => ItemEtiqueta(
-                    etiqueta: etiquetaprovider.listEtiquetas[i],
-                    tema: tema,
-                    size: size,
-                  )),
-        ));
+    return Stack(
+      children: [
+        Scaffold(
+            appBar: AppBar(
+              title: const TextSecundario(texto: 'Etiquetas'),
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const CrearEtiquetaScreen()));
+                    },
+                    icon: const Icon(Icons.add_circle_outline))
+              ],
+            ),
+            body: Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: ListView.separated(
+                  separatorBuilder: ((context, index) => const Divider()),
+                  itemCount: etiquetaprovider.listEtiquetas.length,
+                  itemBuilder: (context, i) => ItemEtiqueta(
+                        etiqueta: etiquetaprovider.listEtiquetas[i],
+                        tema: tema,
+                        size: size,
+                      )),
+            )),
+        if (etiquetaprovider.loading) CargandoWidget(size: size, tema: tema)
+      ],
+    );
   }
 }
 
