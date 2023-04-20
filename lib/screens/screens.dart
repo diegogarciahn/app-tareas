@@ -9,3 +9,4 @@ export 'prioridades/prioridades.screen.dart';
 export 'crearprioridad/crearprioridad.screen.dart';
 export 'tareas/tareas.screen.dart';
 export 'creartarea/creartarea.screen.dart';
+export 'actualizartarea/actualizartarea.screen.dart';

@@ -38,11 +38,13 @@ class TareaService {
   static Future traerTareas(String token) async {
     final client = Client();
     try {
-      var response = await client.get(Uri.parse('${apiUrl}categoria'),
-          headers: {'Authorization': 'Bearer $token'}).timeout(const Duration(seconds: 30));
+      var response = await client.get(Uri.parse('${apiUrl}tarea/usuario'),
+          headers: {
+            'Authorization': 'Bearer $token'
+          }).timeout(const Duration(seconds: 30));
 
       if (response.statusCode == 200) {
-        return categoriasFromJson(response.body);
+        return tareasFromJson(response.body);
       }
       return response.statusCode;
     } catch (e) {
@@ -53,17 +55,23 @@ class TareaService {
 
   static Future<int> actualizarTarea(
       {required int idTarea,
-      required String nombreTarea,
+      required String titulo,
       required String descripcion,
+      required String estado,
+      required int idCategoria,
+      required int idPrioridad,
       required String token}) async {
     final client = Client();
     final body = {
       "idTarea": idTarea,
-      "nombre": nombreTarea,
+      "titulo": titulo,
       "descripcion": descripcion,
+      "estado": estado,
+      "idCategoria": idCategoria,
+      "idPrioridad": idPrioridad,
     };
     try {
-      var response = await client.put(Uri.parse('${apiUrl}categoria/'),
+      var response = await client.put(Uri.parse('${apiUrl}tarea/'),
           body: jsonEncode(body),
           headers: {
             'Authorization': 'Bearer $token',
@@ -83,7 +91,7 @@ class TareaService {
       "idTarea": idTarea,
     };
     try {
-      var response = await client.delete(Uri.parse('${apiUrl}categoria/'),
+      var response = await client.delete(Uri.parse('${apiUrl}tarea/'),
           body: jsonEncode(body),
           headers: {
             'Authorization': 'Bearer $token',

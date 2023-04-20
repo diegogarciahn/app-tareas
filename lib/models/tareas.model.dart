@@ -1,8 +1,6 @@
-// To parse this JSON data, do
-//
-//     final tareas = tareasFromJson(jsonString);
-
 import 'dart:convert';
+
+import 'package:app_tareas/models/models.dart';
 
 List<Tarea> tareasFromJson(String str) => List<Tarea>.from(json.decode(str).map((x) => Tarea.fromJson(x)));
 
@@ -17,6 +15,8 @@ class Tarea {
         this.idCategoria,
         this.idPrioridad,
         this.idUsuario,
+        this.categorium,
+        this.prioridad,
     });
 
     int? id;
@@ -26,6 +26,8 @@ class Tarea {
     int? idCategoria;
     int? idPrioridad;
     int? idUsuario;
+    Categoria? categorium;
+    Prioridad? prioridad;
 
     factory Tarea.fromJson(Map<String, dynamic> json) => Tarea(
         id: json["id"],
@@ -35,6 +37,8 @@ class Tarea {
         idCategoria: json["idCategoria"],
         idPrioridad: json["idPrioridad"],
         idUsuario: json["idUsuario"],
+        categorium: json["categorium"] == null ? null : Categoria.fromJson(json["categorium"]),
+        prioridad: json["prioridad"] == null ? null : Prioridad.fromJson(json["prioridad"]),
     );
 
     Map<String, dynamic> toJson() => {
@@ -45,5 +49,7 @@ class Tarea {
         "idCategoria": idCategoria,
         "idPrioridad": idPrioridad,
         "idUsuario": idUsuario,
+        "categorium": categorium?.toJson(),
+        "prioridad": prioridad?.toJson(),
     };
 }

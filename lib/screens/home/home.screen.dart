@@ -21,6 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final categoriasprovider = Provider.of<CategoriaProvider>(context);
     final etiquetasprovider = Provider.of<EtiquetaProvider>(context);
     final prioridadprovider = Provider.of<PrioridadProvider>(context);
+    final tareaprovider = Provider.of<TareaProvider>(context);
     return Scaffold(
       backgroundColor: tema.background,
       appBar: AppBar(
@@ -43,6 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       icono: Icons.toc_rounded,
                       labelText: 'Tareas',
                       funcion: () {
+                        TareaController(tareaProvider: tareaprovider).traerTareas(context);
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -87,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                   child: GridItemHome(
                       size: size,
-                      icono: Icons.warning_amber_rounded,
+                      icono: Icons.hourglass_top_rounded,
                       labelText: 'Prioridades de tareas',
                       funcion: () {
                         PrioridadController(

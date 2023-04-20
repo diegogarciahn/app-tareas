@@ -4,22 +4,34 @@ import 'package:provider/provider.dart';
 import '../../controllers/controllers.dart';
 import '../../globals/functions/functions.dart';
 import '../../globals/widgets/widgets.dart';
+import '../../models/models.dart';
 import '../../providers/providers.dart';
-import 'components/dropdowncategorias.component.dart';
-import 'components/dropdownprioridades.component.dart';
+import '../creartarea/components/dropdowncategorias.component.dart';
+import '../creartarea/components/dropdownprioridades.component.dart';
 
-class CrearTareaScreen extends StatefulWidget {
-  const CrearTareaScreen({Key? key}) : super(key: key);
+class ActualizarTareaScreen extends StatefulWidget {
+  const ActualizarTareaScreen({Key? key, required this.tarea})
+      : super(key: key);
+
+  final Tarea tarea;
 
   @override
-  State<CrearTareaScreen> createState() => _CrearTareaScreenState();
+  State<ActualizarTareaScreen> createState() => _ActualizarTareaScreenState();
 }
 
-class _CrearTareaScreenState extends State<CrearTareaScreen> {
+class _ActualizarTareaScreenState extends State<ActualizarTareaScreen> {
   TextEditingController categoriaController = TextEditingController();
   TextEditingController descripcionController = TextEditingController();
   ValidacionesTextField check = ValidacionesTextField();
   ValidacionesTextField checkdescripcion = ValidacionesTextField();
+
+  @override
+  void initState() {
+    categoriaController.text = widget.tarea.titulo ?? '';
+    descripcionController.text = widget.tarea.descripcion ?? '';
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final tema = Theme.of(context).colorScheme;
@@ -33,7 +45,7 @@ class _CrearTareaScreenState extends State<CrearTareaScreen> {
           backgroundColor: tema.background,
           appBar: AppBar(
               title: const TextSecundario(
-            texto: 'Crear tarea',
+            texto: 'Actualizar tarea',
           )),
           body: ListView(children: [
             Container(
@@ -41,7 +53,6 @@ class _CrearTareaScreenState extends State<CrearTareaScreen> {
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(color: tema.surface),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextField(
                     controller: categoriaController,
@@ -73,12 +84,8 @@ class _CrearTareaScreenState extends State<CrearTareaScreen> {
                         label: const TextParrafo(
                             texto: 'Descripción de la tarea')),
                   ),
-                  const SizedBox(height: 10),
-                  const TextParrafo(texto: 'Categoría:'),
                   dropDownCategorias(categoriaprovider.listCategorias,
                       categoriaprovider, context),
-                  const SizedBox(height: 10),
-                  const TextParrafo(texto: 'Prioridad:'),
                   dropDownPrioridades(prioridadprovider.listPrioridades,
                       prioridadprovider, context),
                   ButtonXXL(
@@ -98,7 +105,9 @@ class _CrearTareaScreenState extends State<CrearTareaScreen> {
                       final controller =
                           TareaController(tareaProvider: tareaprovider);
                       controller
-                          .crearTarea(context,
+                          .actualizarTarea(context,
+                              idTarea: widget.tarea.id ?? 0,
+                              estado: 'en_progreso',
                               titulo: categoriaController.text,
                               descripcion: descripcionController.text,
                               idCategoria:
@@ -115,7 +124,33 @@ class _CrearTareaScreenState extends State<CrearTareaScreen> {
                         }
                       });
                     },
-                    texto: 'Crear',
+                    texto: 'Actualizar',
+                    sinMargen: true,
+                  ),
+                  ButtonXXL(
+                    funcion: () {
+                      final controller =
+                          TareaController(tareaProvider: tareaprovider);
+                      dialogDecision('Eliminar tarea',
+                          '¿Está seguro de eliminar esta tarea?', () {
+                        Navigator.pop(context);
+                        controller
+                            .eliminarTarea(context,
+                                idTarea: widget.tarea.id ?? 0)
+                            .then((value) {
+                          if (value) {
+                            globalSnackBar('Tarea eliminada exitosamente',
+                                color: Colors.green);
+                            controller.traerTareas(context).then((value) {
+                              Navigator.pop(context);
+                            });
+                          }
+                        });
+                      }, () => Navigator.pop(context), context);
+                    },
+                    texto: 'Eliminar',
+                    colorFondo: tema.error,
+                    colorTexto: tema.onPrimary,
                     sinMargen: true,
                   )
                 ],
