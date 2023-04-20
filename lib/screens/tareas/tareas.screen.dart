@@ -35,6 +35,10 @@ class _TareasScreenState extends State<TareasScreen> {
                           .traerCategorias(context);
                       PrioridadController(prioridadProvider: prioridadprovider)
                           .traerPrioridades(context);
+                      categoriaprovider.idCategoriaSelected = 0;
+                      categoriaprovider.nombreCategoriaSelected = "Seleccione una categoría";
+                      prioridadprovider.idPrioridadSelected = 0;
+                      prioridadprovider.prioridadSelected = "Seleccione un nivel de prioridad";
                       Navigator.push(
                           context,
                           MaterialPageRoute(

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:app_tareas/models/models.dart';
 import 'package:http/http.dart';
 
 import '../constants.dart';
@@ -8,13 +9,11 @@ import '../globals/functions/functions.dart';
 class ComentarioService {
   static Future<int> crearComentario(
       {required String contenido,
-      required int idUsuario,
       required int idTarea,
       required String token}) async {
     final client = Client();
     final body = {
       'contenido': contenido,
-      'idUsuario': idUsuario,
       'idTarea': idTarea,
     };
     try {
@@ -27,6 +26,26 @@ class ComentarioService {
 
       return response.statusCode;
     } catch (e) {
+      return getCodErrorService(e);
+    }
+  }
+
+  static Future traerComentarios(
+      {required int idTarea, required String token}) async {
+    final client = Client();
+    try {
+      var response = await client.get(
+          Uri.parse('${apiUrl}comentario/tarea?idTarea=$idTarea'),
+          headers: {
+            'Authorization': 'Bearer $token'
+          }).timeout(const Duration(seconds: 30));
+
+      if (response.statusCode == 200) {
+        return comentariosFromJson(response.body);
+      }
+      return response.statusCode;
+    } catch (e) {
+      client.close();
       return getCodErrorService(e);
     }
   }

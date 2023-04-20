@@ -110,6 +110,7 @@ class ItemTarea extends StatelessWidget {
                           .traerCategorias(context);
                       PrioridadController(prioridadProvider: prioridadprovider)
                           .traerPrioridades(context);
+
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -123,7 +124,21 @@ class ItemTarea extends StatelessWidget {
                 Expanded(
                   child: ButtonTarea(
                     texto: 'Comentarios',
-                    funcion: () {},
+                    funcion: () {
+                      final comentarioprovider =
+                          Provider.of<ComentarioProvider>(context,
+                              listen: false);
+                      comentarioprovider.listComentarios = [];
+                      ComentarioController(
+                              comentarioProvider: comentarioprovider)
+                          .traerComentarios(context, idTarea: tarea.id ?? 0);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => ComentariosTareaScreen(
+                                    tarea: tarea,
+                                  )));
+                    },
                     icono: Icons.chat_outlined,
                   ),
                 ),

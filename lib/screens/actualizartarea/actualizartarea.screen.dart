@@ -53,6 +53,7 @@ class _ActualizarTareaScreenState extends State<ActualizarTareaScreen> {
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(color: tema.surface),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextField(
                     controller: categoriaController,
@@ -84,8 +85,12 @@ class _ActualizarTareaScreenState extends State<ActualizarTareaScreen> {
                         label: const TextParrafo(
                             texto: 'Descripción de la tarea')),
                   ),
+                  const SizedBox(height: 10),
+                  const TextParrafo(texto: 'Categoría:'),
                   dropDownCategorias(categoriaprovider.listCategorias,
                       categoriaprovider, context),
+                  const SizedBox(height: 10),
+                  const TextParrafo(texto: 'Prioridad:'),
                   dropDownPrioridades(prioridadprovider.listPrioridades,
                       prioridadprovider, context),
                   ButtonXXL(
